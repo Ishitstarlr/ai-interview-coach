@@ -1,0 +1,13 @@
+Software Engineer
+
+We are looking for a Software Engineer with experience in Python, SQL, Docker, AWS, Git and Linux.
+
+Preferred Skills:
+- Kubernetes
+- Redis
+- Machine Learning
+
+Responsibilities:
+- Build scalable backend systems
+- Design REST APIs
+- Collaborate with engineering teams

@@ -18,14 +18,22 @@ class ResumeParser:
 
         skills = self.skill_extractor.extract(cleaned_text)
 
+        raw_text = self.pdf_parser.extract_text(pdf_path)
+        cleaned_text = preprocess(raw_text)
+
         resume_data = {
-
             "raw_text": raw_text,
-
             "cleaned_text": cleaned_text,
-
-            "skills": skills
-
+            "name": None,
+            "email": None,
+            "phone": None,
+            "skills": [],
+            "projects": [],
+            "education": [],
+            "experience": [],
+            "certifications": []
         }
+
+        resume_data["skills"] = self.skill_extractor.extract(cleaned_text)
 
         return resume_data
