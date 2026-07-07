@@ -3,8 +3,7 @@ import os
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from resume_parser import ResumeParser
-
+from parsers.resume_parser import ResumeParser
 parser = ResumeParser()
 
 resume = parser.parse("data/resumes/sample_resume.pdf")

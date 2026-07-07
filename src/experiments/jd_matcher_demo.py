@@ -3,9 +3,9 @@ import os
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from resume_parser import ResumeParser
-from utils.jd_parser import JDParser
-from jd_matcher import JDMatcher
+from parsers.resume_parser import ResumeParser
+from parsers.jd_parser import JDParser
+from engines.jd_matcher import JDMatcher
 
 resume_parser = ResumeParser()
 jd_parser = JDParser()
