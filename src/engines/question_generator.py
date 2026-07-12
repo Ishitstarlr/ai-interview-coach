@@ -1,40 +1,37 @@
 class QuestionGenerator:
 
-    def generate_first_question(self, resume, jd, match_result):
+    def get_next_question(self, session, resume, jd, match_result):
 
         missing = match_result["missing_skills"]
 
-        if missing:
+        asked_topics = {
+            interaction["question"]["topic"]
+            for interaction in session.history
+        }
 
-            topic = missing[0]
+        remaining = [
+            skill
+            for skill in missing
+            if skill not in asked_topics
+        ]
 
-            return {
+        if not remaining:
+            return None
 
-                "id": 1,
-
-                "topic": topic,
-
-                "difficulty": "Easy",
-
-                "reason": "Missing Skill",
-
-                "source": "JD",
-
-                "question": f"What is {topic}?"
-
-            }
+        topic = remaining[0]
 
         return {
 
-            "id": 1,
+            "id": len(session.history) + 1,
 
-            "topic": None,
+            "topic": topic,
 
             "difficulty": "Easy",
 
-            "reason": "General",
+            "reason": "Missing Skill",
 
-            "source": "Resume",
+            "source": "JD",
 
-            "question": "Tell me about yourself."
+            "question": f"What is {topic}?"
+
         }

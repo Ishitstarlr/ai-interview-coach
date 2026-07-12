@@ -37,7 +37,3 @@ def preprocess(text):
     ]
 
     return " ".join(tokens)
-
-sentence = "I love learning NLP with Python! It is amazing."
-
-print(preprocess(sentence))

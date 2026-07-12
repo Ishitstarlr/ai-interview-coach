@@ -1,8 +1,7 @@
 import sys
 import os
-
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-
+from engines.evaluator import Evaluator
 from parsers.resume_parser import ResumeParser
 from parsers.jd_parser import JDParser
 from engines.jd_matcher import JDMatcher
@@ -14,7 +13,12 @@ resume_parser = ResumeParser()
 jd_parser = JDParser()
 matcher = JDMatcher()
 generator = QuestionGenerator()
-engine = InterviewEngine(generator)
+evaluator = Evaluator()
+
+engine = InterviewEngine(
+    generator,
+    evaluator
+)
 
 # Parse resume and JD
 resume = resume_parser.parse("data/resumes/sample_resume.pdf")
@@ -29,17 +33,31 @@ session = engine.start_interview(
     jd,
     match_result
 )
-
 print("=" * 50)
 print("INTERVIEW STARTED")
 print("=" * 50)
 
-question = session.current_question
+while session.current_question is not None:
 
-print(f"Question ID : {question['id']}")
-print(f"Topic       : {question['topic']}")
-print(f"Difficulty  : {question['difficulty']}")
-print(f"Reason      : {question['reason']}")
-print(f"Source      : {question['source']}")
-print()
-print(question["question"])
+    question = session.current_question
+
+    print(f"\nQuestion {question['id']}")
+    print("-" * 50)
+    print(question["question"])
+
+    answer = input("\nYour Answer: ")
+
+    result = engine.submit_answer(
+        session,
+        answer,
+        resume,
+        jd,
+        match_result
+    )
+
+    print("\nScore :", result["evaluation"]["score"])
+    print("Feedback :", result["evaluation"]["feedback"])
+
+print("\n" + "=" * 50)
+print("INTERVIEW FINISHED")
+print("=" * 50)

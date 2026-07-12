@@ -14,6 +14,15 @@ class InterviewSession:
 
         self.history.append(interaction)
 
+        score = interaction["evaluation"]["score"]
+
+        topic = interaction["question"]["topic"]
+
+        if score >= 6:
+            self.strong_topics.add(topic)
+        else:
+            self.weak_topics.add(topic)
+
     def get_progress(self, total_questions):
 
         return len(self.history) / total_questions * 100
