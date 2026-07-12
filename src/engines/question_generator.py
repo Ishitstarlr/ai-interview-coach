@@ -1,3 +1,4 @@
+from knowledge.expected_answers import EXPECTED_ANSWERS
 class QuestionGenerator:
 
     def get_next_question(self, session, resume, jd, match_result):
@@ -32,6 +33,11 @@ class QuestionGenerator:
 
             "source": "JD",
 
-            "question": f"What is {topic}?"
+            "question": f"What is {topic}?",
+
+            "expected_answer": EXPECTED_ANSWERS.get(
+                topic,
+                ""
+            )
 
         }

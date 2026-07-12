@@ -1,20 +1,30 @@
+from utils.tfidf_similarity import compute_similarity
+
+
 class Evaluator:
 
     def evaluate(self, question, answer):
 
         topic = question["topic"]
 
-        answer = answer.lower()
+        similarity = compute_similarity(
+            question["expected_answer"],
+            answer
+        )
 
-        if topic and topic.lower() in answer:
+        score = round(similarity * 10)
 
-            score = 8
-            feedback = "Good! You mentioned the key topic."
+        if score >= 8:
+            feedback = "Excellent answer."
+
+        elif score >= 6:
+            feedback = "Good answer."
+
+        elif score >= 4:
+            feedback = "Partial understanding."
 
         else:
-
-            score = 3
-            feedback = "The answer does not mention the expected topic."
+            feedback = "Needs improvement."
 
         return {
 
@@ -22,6 +32,8 @@ class Evaluator:
 
             "feedback": feedback,
 
-            "topic": topic
+            "topic": topic,
+
+            "similarity": similarity
 
         }

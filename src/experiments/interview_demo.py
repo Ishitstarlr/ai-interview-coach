@@ -26,7 +26,6 @@ jd = jd_parser.parse("data/job_descriptions/software_engineer.txt")
 
 # Match them
 match_result = matcher.match(resume, jd)
-print(match_result)
 # Start interview
 session = engine.start_interview(
     resume,
@@ -41,9 +40,20 @@ while session.current_question is not None:
 
     question = session.current_question
 
-    print(f"\nQuestion {question['id']}")
-    print("-" * 50)
+    print("\n" + "=" * 60)
+
+    print(f"Question {question['id']} / {len(match_result['missing_skills'])}")
+    print(f"Topic      : {question['topic']}")
+
+    print(f"Difficulty : {question['difficulty']}")
+
+    print(f"Reason     : {question['reason']}")
+
+    print("-" * 60)
+
     print(question["question"])
+
+    print("=" * 60)
 
     answer = input("\nYour Answer: ")
 
@@ -55,8 +65,17 @@ while session.current_question is not None:
         match_result
     )
 
-    print("\nScore :", result["evaluation"]["score"])
-    print("Feedback :", result["evaluation"]["feedback"])
+    print("\n" + "-" * 60)
+    print("Evaluation")
+    print("-" * 60)
+
+    
+    print(f"Similarity : {result['evaluation']['similarity']:.2f}")
+    print(f"Score      : {result['evaluation']['score']}")
+    print(f"Feedback   : {result['evaluation']['feedback']}")
+
+    print("-" * 60)
+    session.current_question = result["next_question"]
 
 print("\n" + "=" * 50)
 print("INTERVIEW FINISHED")
